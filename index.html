@@ -3,23 +3,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 
-<div class="scale-root">
-  <h1>ズーム対応フルリキッド</h1>
-  <p>ブラウザズームで1.25倍されたら、見た目も1.25倍になります。</p>
-  <div class="content">
-    <div class="content-1">1</div>
-    <div class="content-2">2</div>
+<body>
+  <div class="scale-root">
+    <h1>ズーム対応フルリキッド</h1>
+    <p>ブラウザズームで1.25倍されたら、見た目も1.25倍になります。</p>
+    <div class="content">
+      <div class="content-1">1</div>
+      <div class="content-2">2</div>
+    </div>
   </div>
-</div>
 
 <script>
-
   function updateScale() {
-    const zoom = window.outerWidth / window.innerWidth;
+    const ua = navigator.userAgent;
+    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+
+    let zoom;
+
+    if (isMobile) {
+      zoom = window.outerWidth / window.innerWidth;
+
+      // outerWidthが不安定なブラウザ用フォールバック
+      if (!isFinite(zoom) || zoom <= 0) {
+        zoom = 1;
+      }
+    } else {
+      zoom = window.devicePixelRatio || 1;
+    }
+
     document.documentElement.style.setProperty("--window-zoom", zoom);
   }
 
-  updateScale();
+  // 初期化
+  window.addEventListener("DOMContentLoaded", updateScale);
   window.addEventListener("resize", updateScale);
   window.visualViewport?.addEventListener("resize", updateScale);
 </script>
+</body>
