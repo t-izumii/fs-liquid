@@ -14,9 +14,11 @@
 
 <script>
   const BASE_WIDTH = 1440;
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
   function updateScale() {
-    document.documentElement.style.setProperty("--window-zoom", window.devicePixelRatio);
+    const zoom = isMobile ? 1 : window.devicePixelRatio;
+    document.documentElement.style.setProperty("--window-zoom", zoom);
   }
 
   updateScale();
