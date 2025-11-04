@@ -1,0 +1,39 @@
+:root {
+  --window-zoom: 1;
+  --window-scale: 0.0694444444vw;
+}
+@media (max-width: 768px) {
+  :root {
+    --window-scale: 0.2666666667vw;
+  }
+}
+
+h1 {
+  font-size: calc(16 * var(--window-scale) * var(--window-zoom));
+}
+
+p {
+  font-size: calc(16 * var(--window-scale) * var(--window-zoom));
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: calc(20 * var(--window-scale) * var(--window-zoom));
+  }
+  p {
+    font-size: calc(14 * var(--window-scale) * var(--window-zoom));
+  }
+}
+.content {
+  display: flex;
+}
+
+.content-1 {
+  width: calc(400 * var(--window-scale) * var(--window-zoom));
+  background-color: rgb(0, 255, 51);
+}
+
+.content-2 {
+  width: calc(600 * var(--window-scale) * var(--window-zoom));
+  background-color: rgb(255, 0, 0);
+}/*# sourceMappingURL=style.css.map */

@@ -1,0 +1,45 @@
+@use "sass:math";
+:root {
+  --window-zoom: 1;
+  --window-scale: #{math.div(100vw, 1440)};
+
+  @media (max-width: 768px) {
+    --window-scale: #{math.div(100vw, 375)};
+  }
+}
+
+@function liquid($size) {
+  @return calc($size * var(--window-scale) * var(--window-zoom));
+}
+
+
+h1 {
+  font-size: liquid(16);
+}
+
+p {
+  font-size: liquid(16);
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: liquid(20);
+  }
+  p {
+    font-size: liquid(14);
+  }
+}
+
+.content {
+  display: flex;
+}
+
+.content-1 {
+  width: liquid(400);
+  background-color: rgb(0, 255, 51);
+}
+
+.content-2 {
+  width: liquid(600);
+  background-color: rgb(255, 0, 0);
+}

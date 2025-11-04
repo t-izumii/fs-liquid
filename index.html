@@ -1,0 +1,25 @@
+<head>
+  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+</head>
+
+<div class="scale-root">
+  <h1>ズーム対応フルリキッド</h1>
+  <p>ブラウザズームで1.25倍されたら、見た目も1.25倍になります。</p>
+  <div class="content">
+    <div class="content-1">1</div>
+    <div class="content-2">2</div>
+  </div>
+</div>
+
+<script>
+  const BASE_WIDTH = 1440;
+
+  function updateScale() {
+    document.documentElement.style.setProperty("--window-zoom", window.devicePixelRatio);
+  }
+
+  updateScale();
+  window.addEventListener("resize", updateScale);
+  window.visualViewport?.addEventListener("resize", updateScale);
+</script>
