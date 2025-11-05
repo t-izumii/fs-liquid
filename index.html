@@ -17,26 +17,45 @@
   </div>
 
   <script>
-    function updateScale() {
+    function updateBrowserZoomScale() {
       const ua = navigator.userAgent;
-      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
       const isFirefox = /Firefox/i.test(ua);
+      const browserZoom = isFirefox
+        ? calculateZoomByDevicePixelRatio()
+        : calculateZoomByViewport();
 
-      let zoom = 1;
+      // debug用
+      console.log(browserZoom);
+      document.documentElement.style.setProperty("--window-zoom", browserZoom);
+    }
 
-      if (isMobile) {
-        zoom = window.outerWidth / window.innerWidth;
-      } else {
-        // memo: firefoxで画面倍率が取得できない
-        if (isFirefox) return;
-        zoom = window.outerWidth / window.innerWidth;
+    /**
+     * ビューポートサイズに基づいてズームレベルを計算
+     * @returns {number} ズームレベル（1.0 = 100%）
+     */
+    function calculateZoomByViewport() {
+      return window.outerWidth / window.innerWidth;
+    }
+
+    /**
+     * devicePixelRatioに基づいてズームレベルを計算（Firefox用）
+     * @returns {number} 相対的なズームレベル
+     */
+    function calculateZoomByDevicePixelRatio() {
+      const BASE_DPR_STORAGE_KEY = "browser-base-dpr";
+      const currentDPR = window.devicePixelRatio;
+      let baseDPR = parseFloat(localStorage.getItem(BASE_DPR_STORAGE_KEY));
+
+      if (!baseDPR) {
+        baseDPR = currentDPR;
+        localStorage.setItem(BASE_DPR_STORAGE_KEY, baseDPR);
       }
 
-      document.documentElement.style.setProperty("--window-zoom", zoom);
+      return currentDPR / baseDPR;
     }
 
     // 初期化
-    window.addEventListener("DOMContentLoaded", updateScale);
-    window.addEventListener("resize", updateScale);
+    window.addEventListener("DOMContentLoaded", updateBrowserZoomScale);
+    window.addEventListener("resize", updateBrowserZoomScale);
   </script>
 </body>
