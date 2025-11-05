@@ -1,6 +1,9 @@
 <head>
-  <link rel="stylesheet" href="./style.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="./style.css" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  />
 </head>
 
 <body>
@@ -13,30 +16,27 @@
     </div>
   </div>
 
-<script>
-  function updateScale() {
-    const ua = navigator.userAgent;
-    const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+  <script>
+    function updateScale() {
+      const ua = navigator.userAgent;
+      const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+      const isFirefox = /Firefox/i.test(ua);
 
-    let zoom;
+      let zoom = 1;
 
-    if (isMobile) {
-      zoom = window.outerWidth / window.innerWidth;
-
-      // outerWidthが不安定なブラウザ用フォールバック
-      if (!isFinite(zoom) || zoom <= 0) {
-        zoom = 1;
+      if (isMobile) {
+        zoom = window.outerWidth / window.innerWidth;
+      } else {
+        // memo: firefoxで画面倍率が取得できない
+        if (isFirefox) return;
+        zoom = window.outerWidth / window.innerWidth;
       }
-    } else {
-      zoom = window.devicePixelRatio || 1;
+
+      document.documentElement.style.setProperty("--window-zoom", zoom);
     }
 
-    document.documentElement.style.setProperty("--window-zoom", zoom);
-  }
-
-  // 初期化
-  window.addEventListener("DOMContentLoaded", updateScale);
-  window.addEventListener("resize", updateScale);
-  window.visualViewport?.addEventListener("resize", updateScale);
-</script>
+    // 初期化
+    window.addEventListener("DOMContentLoaded", updateScale);
+    window.addEventListener("resize", updateScale);
+  </script>
 </body>
