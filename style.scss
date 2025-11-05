@@ -39,6 +39,7 @@ p {
   margin-top: liquid(40);
   padding: liquid(20);
   display: flex;
+  flex-wrap: wrap;
   width: liquid(1440);
   max-width: 100vw;
   font-size: liquid(16);
@@ -48,11 +49,13 @@ p {
 .content-1 {
   padding: liquid(20);
   width: liquid(400);
+  max-width: 100%;
   background-color: rgb(0, 255, 51);
 }
 
 .content-2 {
   padding: liquid(20);
   width: liquid(600);
+  max-width: 100%;
   background-color: rgb(255, 0, 0);
 }
